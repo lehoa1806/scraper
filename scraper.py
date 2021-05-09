@@ -6,13 +6,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
+from utils.configs.setting import Setting
 
 from scraper.drivers.chrome import Chrome
 from scraper.drivers.firefox import Firefox
-from utils.configs.setting import Setting
-from utils.decorators.do_and_sleep import do_and_sleep
 
-from .common import BrowserType, wait_for_page_load
+from .common import BrowserType, do_and_sleep, wait_for_page_load
 from .locators import (ClassNameLocator, CSSLocator, IdLocator,
                        LinkTextLocator, NameLocator, PartialLinkTextLocator,
                        TagNameLocator, XpathLocator)
