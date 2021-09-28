@@ -284,6 +284,15 @@ class Scraper:
         """
         return self.wait_for_presence(CSSLocator(css_selector))
 
+    def wait_for_tag_name_presence(self, name: str) -> WebElement:
+        """
+        Find an element and wait for it to be visible using its tag name.
+          element = self.wait_for_tag_name_presence(name)
+        :param name: The tag name of the element, ex: 'foo'
+        :return: WebElement
+        """
+        return self.wait_for_presence(TagNameLocator(name))
+
     def wait_for_css_visibility(self, css_selector: str) -> WebElement:
         """
         Find an element and wait for it to be visible using its css_selector.
@@ -295,12 +304,21 @@ class Scraper:
 
     def wait_for_class_visibility(self, name: str) -> WebElement:
         """
-        Find an element and wait for it to be visible using its css_selector.
+        Find an element and wait for it to be visible using its class name.
           element = self.wait_for_class_visibility(name)
         :param name: The class name of the element, ex: 'foo'
         :return: WebElement
         """
         return self.wait_for_visibility(ClassNameLocator(name))
+
+    def wait_for_tag_name_visibility(self, name: str) -> WebElement:
+        """
+        Find an element and wait for it to be visible using its tag name.
+          element = self.wait_for_tag_name_visibility(name)
+        :param name: The tag name of the element, ex: 'foo'
+        :return: WebElement
+        """
+        return self.wait_for_visibility(TagNameLocator(name))
 
     @do_and_sleep(level=2)
     def scroll(self) -> None:
@@ -325,4 +343,22 @@ class Scraper:
         Perform a mouse over action on the giving element.
         :param element: WebElement
         """
-        ActionChains(self.browser).move_to_element(element).perform()
+        action = ActionChains(self.browser)
+        action.move_by_offset(0, 0)
+        action.move_to_element(element)
+        action.perform()
+
+    @do_and_sleep
+    def switch_to_iframe(self, iframe: WebElement) -> None:
+        """
+        Move to the iframe.
+        :param iframe: WebElement
+        """
+        self.browser.switch_to.frame(iframe)
+
+    @do_and_sleep
+    def switch_to_main_page(self) -> None:
+        """
+        Move back to the main page.
+        """
+        self.browser.switch_to.default_content()
