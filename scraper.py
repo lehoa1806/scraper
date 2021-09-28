@@ -25,7 +25,8 @@ class Scraper:
         browser: WebDriver = None,
         **kwargs,
     ) -> None:
-        self.headless = kwargs.get('headless') or Setting().headless
+        headless = kwargs.get('headless')
+        self.headless = Setting().headless if headless is None else headless
         self.timeout = kwargs.get('timeout') or Setting().scraper_timeout
         self._browser = browser
         self._browser_type = kwargs.get('browser_type')
