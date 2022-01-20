@@ -12,6 +12,8 @@ from scraper.drivers.chrome import Chrome
 from scraper.drivers.firefox import Firefox
 
 from .common import BrowserType, do_and_sleep, wait_for_page_load
+from .elements.button import Button
+from .elements.dropdown import DropDown
 from .locators import (ClassNameLocator, CSSLocator, IdLocator,
                        LinkTextLocator, NameLocator, PartialLinkTextLocator,
                        TagNameLocator, XpathLocator)
@@ -362,3 +364,41 @@ class Scraper:
         Move back to the main page.
         """
         self.browser.switch_to.default_content()
+
+    @do_and_sleep()
+    def select_dropdown_by_css_selector(self, css_selector):
+        """
+        Locate a dropdown element by css selector.
+          dropdown = self.select_dropdown_by_css_selector('#foo')
+        :param css_selector: CSS selector string, ex: '#select'
+        :return: WebElement - the dropdown if it was found
+        """
+        return DropDown.load_dropdown_by_css_selector(
+            parent=self.browser, css_selector=css_selector)
+
+    @do_and_sleep()
+    def select_button_by_css_selector(self, css_selector):
+        """
+        Locate a button element by css selector.
+          dropdown = self.select_button_by_css_selector('#foo')
+        :param css_selector: CSS selector string, ex: '#select'
+        :return: WebElement - the button if it was found
+        """
+        return Button.load_button_by_css_selector(
+            parent=self.browser, css_selector=css_selector)
+
+    @do_and_sleep()
+    def select_child_button_by_css_selector(
+        self,
+        element: WebElement,
+        css_selector: str,
+    ):
+        """
+        Locate a button element by css selector.
+          dropdown = self.select_button_by_css_selector('#foo')
+        :param element: the parent web element
+        :param css_selector: CSS selector string, ex: '#select'
+        :return: WebElement - the button if it was found
+        """
+        return Button.load_button_by_css_selector(
+            parent=element, css_selector=css_selector)
